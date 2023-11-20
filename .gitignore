@@ -1,0 +1,8 @@
+/WebAPI/WebAPITest.http
+**/bin/
+**/obj/
+data.json
+.idea
+.git
+Gossips.db
+/Migratrions/
