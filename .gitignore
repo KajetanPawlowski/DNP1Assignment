@@ -5,4 +5,4 @@ data.json
 .idea
 .git
 Gossips.db
-/Migratrions/
+**/Migrations/
