@@ -1,8 +1,10 @@
 /WebAPI/WebAPITest.http
-**/bin/
-**/obj/
+**/bin/*
+**/obj/*
+**/bin/**
+**/obj/**
 data.json
 .idea
 .git
 Gossips.db
-**/Migrations/
+**/Migrations/*
