@@ -1,0 +1,88 @@
+@page "/CreatePost"
+@attribute [Authorize]
+@using HttpClients.Interfaces
+@inject NavigationManager navMgr
+@inject IPostHttpClient postHttpClient
+<PageTitle>Index</PageTitle>
+<AuthorizeView>
+    <NotAuthorized>
+        <h3>Log in to see more</h3>
+    </NotAuthorized>
+    <Authorized>
+        <div class="card">
+            <h3 class="field">Write a post</h3>
+            <div class="form-group">
+                <input class="title-field input-field post-card" type="text" placeholder="Title" @bind="Title">
+            </div>
+            <div class="form-group">
+                <textarea class="body-field input-field post-card" type="text" placeholder="Share your thoughts" @bind="Body" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                @if (!string.IsNullOrEmpty(resultMsg))
+                {
+                    <label style="color: @color">@resultMsg</label>
+                }
+                <button @onclick="Create" class="createBtn">Create</button>
+            </div>
+        </div>
+
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    
+    private string username;
+    private string Title = "";
+    private string Body = "";
+    private string color = "";
+    private string resultMsg = "";
+    
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private async Task LoadUsername()
+    {
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            username = user.Identity.Name;
+        }
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsername();
+    }
+
+    private async Task Create()
+    {
+        resultMsg = "";
+        if (string.IsNullOrEmpty(Title))
+        {
+            resultMsg = "You must write a title";
+            color = "red";
+            return;
+        }
+        if (string.IsNullOrEmpty(Body))
+        {
+            resultMsg = "Make sure to write something!";
+            color = "red";
+            return;
+        }
+
+        try
+        {
+            await postHttpClient.AddPost(username, Title, Body);
+            color = "green";
+            resultMsg = "Task Created!";
+            navMgr.NavigateTo("/");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            resultMsg = e.Message;
+        }
+    }
+}

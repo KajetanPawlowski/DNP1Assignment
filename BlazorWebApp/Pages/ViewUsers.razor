@@ -1,0 +1,76 @@
+@page "/ViewUsers"
+@using Domain.Model
+@using HttpClients.Interfaces
+@attribute [Authorize(Policy = "isAdmin")]
+@inject IUserHttpClient userHttpClient;
+
+<h3 onclick="">Manage Users</h3>
+@if (users == null)
+{
+    <p>Loading user's data....</p>
+}
+else if (!users.Any())
+{
+    <p>No Users to display</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User id</th>
+            <th>Username</th>
+            <th># of Posts</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in users)
+        {
+            <tr>
+                <td>@item.Username</td>
+                <td>@NoOfPosts</td>
+                <td>@item.Role</td>
+                <td><AdminButtons user="@item" OnRoleChanged="@HandleRoleChanged"/></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<User> users;
+    private string msg = "";
+
+    private int NoOfPosts = 0;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    private async Task LoadUsers()
+    {
+        try
+        {
+            users = await userHttpClient.GetUsersAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = "Failed to load users";
+        }
+    }
+
+    private async Task HandleRoleChanged()
+    {
+        // Update the users collection and set the flag to trigger a re-render.
+        await LoadUsers();
+        StateHasChanged();
+    }
+
+   
+}

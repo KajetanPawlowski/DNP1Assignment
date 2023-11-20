@@ -1,0 +1,56 @@
+﻿@page "/Register"
+@using HttpClients.Interfaces
+@inject IAuthHttpClient AuthHttpClient
+@inject NavigationManager navMgr
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="card login col-lg-3 col-md-6">
+            <h4> Would you like to Sign up?</h4>
+            <div class="field">
+                <input class="input-field" type="text" placeholder="Username" @bind="userName"/>
+            </div>
+            <div class="field">
+                <input class="input-field" type="password" placeholder="Password" @bind="password"/>
+            </div>
+            @if (!string.IsNullOrEmpty(errorLabel))
+            {
+                <div class="field">
+                    <label style="color: red">
+                        @errorLabel
+                    </label>
+                </div>
+            }
+            <div>
+                <button class="input-field signInBtn" @onclick="RegisterAsync">Sign Up</button>
+            </div>
+        </div>
+    </NotAuthorized>
+    <Authorized>
+        <div class="card">
+            <h3>Logged in as: @context.User.Identity.Name</h3>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private string userName;
+    private string password;
+    private string errorLabel;
+
+    private async Task RegisterAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            await AuthHttpClient.RegisterAsync(userName, password);
+            await AuthHttpClient.LoginAsync(userName, password);
+            navMgr.NavigateTo("/login");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            errorLabel = $"Error: {e.Message}";
+        }
+    }
+}

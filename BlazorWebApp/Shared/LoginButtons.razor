@@ -1,0 +1,50 @@
+@page "/button"
+@using HttpClients.Interfaces
+@inject NavigationManager navMgr
+@inject IAuthHttpClient authService
+
+<AuthorizeView>
+    <Authorized>
+        <div>
+            <span class="welcome-span" @onclick="Logout">Hello @context.User.Identity.Name</span>
+            <img class="icon" src="img/Logout.png" @onclick="Logout"/>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div>
+            <span class="welcome-span" @onclick="Login">Log in / Sign up :)</span>
+            <img class="icon" src="img/Login.png" @onclick="Login"/>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    
+    private void Login()
+    {
+        navMgr.NavigateTo("/Login");
+    }
+
+    private async Task Logout()
+    {
+        await authService.LogoutAsync(await LoadUsername());
+        navMgr.NavigateTo("/");
+    }
+    private async Task<string> LoadUsername()
+    {
+        var authenticationState = await authenticationStateTask;
+        var user = authenticationState.User;
+
+        if (user.Identity == null)
+        {
+            navMgr.NavigateTo("/");
+        }
+        else if (user.Identity.IsAuthenticated)
+        {
+            return user.Identity.Name;
+        }
+        return null;
+    }
+
+}

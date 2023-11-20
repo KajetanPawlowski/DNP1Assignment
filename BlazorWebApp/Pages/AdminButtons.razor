@@ -1,0 +1,43 @@
+@using HttpClients.Interfaces
+@using Domain.DTOs
+@using Domain.Model
+@inject IUserHttpClient userHttpClient;
+
+<div class="adminButtons">
+    <span style="color: @color" class="icon oi oi-person" title="Make admin" @onclick="() => ChangeRole(user)"></span>
+    <span class="icon oi oi-pencil" title="Edit"></span>
+    <span class="icon oi oi-trash" title="Delete User" @onclick="() => RemoveUser(user)"></span>
+</div>
+
+@code {
+    [Parameter]
+    public User user { get; set; }
+    
+    [Parameter]
+    public EventCallback<string> OnRoleChanged { get; set; }
+    
+    private string color = "black";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        color = user.Role.Equals("admin") ? "#FF1493" : "black";
+    }
+
+    private async Task ChangeRole(User user)
+    {
+        Console.WriteLine("Patch for user: " + user.Username);
+        bool isAdmin = user.Role.Equals("admin");
+        //opposite colour 
+        color = user.Role.Equals("admin") ? "black" : "#FF1493";
+        await userHttpClient.ChangeRoleAsync(user.Username, isAdmin);
+
+        await OnRoleChanged.InvokeAsync(null);
+    }
+    private async Task RemoveUser(User user)
+    {
+        Console.WriteLine("Remove user: " + user.Username);
+        await userHttpClient.RemoveUser(user.Username);
+
+        await OnRoleChanged.InvokeAsync(null);
+    }
+}

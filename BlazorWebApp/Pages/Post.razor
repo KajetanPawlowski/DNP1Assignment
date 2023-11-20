@@ -1,0 +1,51 @@
+@using static Domain.Model.Post
+@inject NavigationManager navMgr
+
+<div class="card  @rolledUpStyle">
+    <div class="field username-field">
+        @ForDisplay.UserId at: @ForDisplay.Timestamp
+    </div>
+    <div class="field title-field">
+        @ForDisplay.Title
+    </div>
+    <div class="field body-field">
+        @if (showFullBody)
+        {
+            @ForDisplay.Body
+        }
+        else
+        {
+            @ForDisplay.Body.Substring(0, Math.Min(ForDisplay.Body.Length, 50));
+        }
+        <span class="read-more" @onclick="ToggleReadMore">@buttonText</span>
+    </div>
+    
+</div>
+
+@code {
+    [Parameter]
+    public Domain.Model.Post ForDisplay { get; set; }
+    
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private bool showFullBody = false;
+    private string buttonText = " ...Read more";
+    private string rolledUpStyle = "rolled-up";
+
+    private async Task ToggleReadMore()
+    {
+        if (!showFullBody)
+        {
+            var authState = await authenticationStateTask;
+            if (authState.User.Identity == null)
+            {
+                navMgr.NavigateTo("/Login");   
+                return;
+            }
+        }
+        showFullBody = !showFullBody;
+        buttonText = showFullBody ? "" : "...Read more";
+        rolledUpStyle = showFullBody ? "" : "rolled-up";
+    }
+}

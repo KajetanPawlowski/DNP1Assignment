@@ -1,0 +1,71 @@
+﻿@page "/Login"
+@using HttpClients.Interfaces
+@using System.Security.Claims
+
+@inject IAuthHttpClient AuthHttpClient
+@inject NavigationManager navMgr
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="card login">
+            <h3> Please login </h3>
+            <div class="field">
+                <input class="input-field" type="text" placeholder="Username" @bind="userName"/>
+            </div>
+            <div class="field">
+                <input class="input-field" type="password" placeholder="Password" @bind="password"/>
+            </div>
+            @if (!string.IsNullOrEmpty(errorLabel))
+            {
+                <div class="field">
+                    <label style="color: red">
+                        @errorLabel
+                    </label>
+                </div>
+            }
+            <div class="field">
+                <button class=" input-field loginBtn" @onclick="LoginAsync">Log in</button>
+            </div>
+        </div>
+        <div class="card login">
+            <button class="input-field signInBtn" @onclick="Register">Sign Up</button>
+            </div>
+    </NotAuthorized>
+    <Authorized>
+        <div class="card">
+            <h3>Logged in as: @context.User.Identity.Name</h3>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private string userName;
+    private string password;
+    private string errorLabel;
+
+    private async Task LoginAsync()
+    {
+        errorLabel = "";
+        try
+        {
+            await AuthHttpClient.LoginAsync(userName, password);
+            // Set the username in the HttpContext after a successful login
+            
+            navMgr.NavigateTo("/");
+        }
+        catch (Exception e)
+        {   
+            if (e.Message.Equals("User not found"))
+            {
+                navMgr.NavigateTo("/Register");
+            }
+            Console.WriteLine(e);
+            errorLabel = $"Error: {e.Message}";
+        }
+    }
+
+    private void Register()
+    {
+        navMgr.NavigateTo("/Register");
+    }
+}

@@ -1,0 +1,132 @@
+/* Common styles for cards */
+.card {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Rounded corners */
+    padding: 20px;
+    width: 90%;
+    margin:10px auto;
+    position: relative;
+}
+.card.login{
+    
+}
+.card.rolled-up::after {
+    content: "";
+    position: absolute;
+    border-radius: 20px; /* Rounded corners */
+    padding: 20px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+h3{
+    margin: auto;
+}
+
+
+/* Common styles for form groups */
+.form-group {
+    margin: 10px;
+}
+.username-field{
+    color: cornflowerblue;
+    font-weight: bold;
+}
+.title-field{
+    font-weight: bold;
+    font-size: larger;
+}
+.body-field{
+    text-align: justify;
+}
+
+
+.input-field{
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Rounded corners */
+    padding: 5px;
+    padding-left: 10px;
+    margin: 5px;
+    width: 100%;
+}
+
+.title-field.input-field{
+    width: 100%;
+    margin: auto;
+}
+
+.body-field.input-field{
+    height: 250px;
+    width: 100%;
+    margin: auto;
+    vertical-align: top;
+}
+
+
+button {
+    background-color: #FF1493;
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Rounded corners for buttons */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: auto;
+}
+
+button:hover {
+    background-color: #FE1090;
+}
+
+button.signInBtn {
+    background-color: cornflowerblue;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+button.loginBtn {
+    background-color: lightgreen;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+button.createBtn{
+    background-color: #FF1493;
+    width: 100%;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.feed-buttons {
+    display: flex; /* Add this line */
+    background: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Rounded corners */
+    padding: 10px;
+    width: 90%;
+    margin: auto;
+    justify-content: space-between; /* Optional: Adjust horizontal alignment */
+}
+.feed-option{
+    width: 48%;
+    background-color: #ccc;
+    border-radius: 10px;
+}
+.highlight{
+    background-color: #FF1493;
+}
+.writePostBtn{
+    margin-top: 10px;
+    background-color: #ccc;
+    justify-content: center;
+}
