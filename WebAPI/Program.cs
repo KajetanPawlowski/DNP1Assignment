@@ -24,12 +24,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Program elements 
-// builder.Services.AddDbContext<GossipsDbContext>();
-// builder.Services.AddScoped<IUserDAO, UserEfcDao>();
-// builder.Services.AddScoped<IPostDAO, PostEfcDao>();
-builder.Services.AddScoped<FileContext>();
-builder.Services.AddScoped<IUserDAO, UserFileDao>();
-builder.Services.AddScoped<IPostDAO, PostFileDao>();
+builder.Services.AddDbContext<GossipsDbContext>();
+builder.Services.AddScoped<IUserDAO, UserEfcDao>();
+builder.Services.AddScoped<IPostDAO, PostEfcDao>();
+// builder.Services.AddScoped<FileContext>();
+// builder.Services.AddScoped<IUserDAO, UserFileDao>();
+// builder.Services.AddScoped<IPostDAO, PostFileDao>();
 
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IPostLogic, PostLogic>();
