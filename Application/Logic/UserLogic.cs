@@ -31,6 +31,7 @@ public class UserLogic :IUserLogic
             Username = dto.Username,
             Password = dto.Password,
             Role = "user",
+            PostCount = 0
         };
     
         User created = await userDao.CreateAsync(toCreate);
@@ -110,7 +111,6 @@ public class UserLogic :IUserLogic
 
     public Task<User?> GetByIdAsync(int userId)
     {
-        
         return userDao.GetByIdAsync(userId);
     }
 
@@ -118,4 +118,5 @@ public class UserLogic :IUserLogic
     {
         return userDao.GetByUsernameAsync(username);
     }
+    
 }

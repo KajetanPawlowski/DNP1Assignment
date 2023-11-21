@@ -14,6 +14,5 @@ public interface IUserLogic
     Task<List<User?>> GetUsersAsync();
     Task<User?> GetByIdAsync(int userId);
     Task<User?> GetByUsernameAsync(string username);
-
     
 }

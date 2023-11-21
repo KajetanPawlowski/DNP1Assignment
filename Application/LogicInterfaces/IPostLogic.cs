@@ -11,6 +11,6 @@ public interface IPostLogic
 
     Task<List<Post?>> GetAsync(SearchPostParameterDTO searchParameters);
     // Task UpdateAsync(PostUpdateDTO post);
-    Task<PostBasicDTO> GetByIdAsync(int id);
+    Task<Post> GetByIdAsync(int id);
     Task DeleteAsync(int id);
 }

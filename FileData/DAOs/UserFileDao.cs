@@ -85,4 +85,9 @@ public class UserFileDao : IUserDAO
 
         return await Task.FromResult(existing);
     }
+
+    public Task UpdatePostCounter(int userId)
+    {
+        throw new NotImplementedException();
+    }
 }
