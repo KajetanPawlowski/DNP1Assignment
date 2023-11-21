@@ -83,11 +83,11 @@ public class PostController : ControllerBase
     }
     //GET BY ID Post
     [HttpGet("{id:int}"), Authorize("isUser")]
-    public async Task<ActionResult<PostBasicDTO>> GetById([FromRoute] int id)
+    public async Task<ActionResult<Post>> GetById([FromRoute] int id)
     {
         try
         {
-            PostBasicDTO result = await postLogic.GetByIdAsync(id);
+            Post result = await postLogic.GetByIdAsync(id);
             return Ok(result);
         }
         catch (Exception e)

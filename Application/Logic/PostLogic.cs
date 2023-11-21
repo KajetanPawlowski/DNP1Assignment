@@ -33,6 +33,7 @@ public class PostLogic: IPostLogic
         Post toCreate = new()
         {
             UserId = user.UserId,
+            Username = dto.Username,
             Title = dto.Title,
             Body = dto.Body
         };
@@ -112,15 +113,15 @@ public class PostLogic: IPostLogic
     //     await postDao.UpdateAsync(dto.PostId, updatedPost);
     // }
 
-    public async Task<PostBasicDTO> GetByIdAsync(int id)
+    public async Task<Post> GetByIdAsync(int id)
     {
         Post? post = await postDao.GetByIdAsync(id);
         if (post == null)
         {
             throw new Exception($"Post with id {id} not found");
         }
-
-        return new PostBasicDTO(post.Title, post.UserId, post.PostId, post.Body, post.Timestamp);
+        
+        return await Task.FromResult(post);
     }
 
     public async Task DeleteAsync(int id)
