@@ -8,3 +8,5 @@ data.json
 .git
 Gossips.db
 **/Migrations/*
+EfcDataAccess/Gossips.db-shm
+EfcDataAccess/Gossips.db-wal
