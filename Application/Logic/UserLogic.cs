@@ -110,7 +110,6 @@ public class UserLogic :IUserLogic
 
     public Task<User?> GetByIdAsync(int userId)
     {
-        
         return userDao.GetByIdAsync(userId);
     }
 
@@ -118,4 +117,5 @@ public class UserLogic :IUserLogic
     {
         return userDao.GetByUsernameAsync(username);
     }
+    
 }

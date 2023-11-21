@@ -37,9 +37,19 @@ public class UserEfcDao : IUserDAO
         await context.SaveChangesAsync();
     }
 
-    public Task<User?> AssignRoleAsync(int userId, string newRole)
+    public async Task<User?> AssignRoleAsync(int userId, string newRole)
     {
-        throw new NotImplementedException();
+        User? user = await GetByIdAsync(userId);
+        if (user == null)
+        {
+            throw new Exception("User not found");
+        }
+
+        user.Role = newRole;
+        context.Users.Update(user);
+        await context.SaveChangesAsync();
+        return user;
+
     }
     public async Task<User?> GetByUsernameAsync(string userName)
     {
@@ -51,11 +61,14 @@ public class UserEfcDao : IUserDAO
 
     public Task<List<User?>> GetAsync()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(context.Users.ToList());
     }
 
-    public Task<User?> GetByIdAsync(int userId)
+    public async Task<User?> GetByIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        User? existing = await context.Users.FirstOrDefaultAsync(u =>
+            u.UserId == userId
+        );
+        return existing;
     }
 }

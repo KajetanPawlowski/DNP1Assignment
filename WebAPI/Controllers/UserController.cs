@@ -75,7 +75,6 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
     //DELETE User
     [HttpDelete, Authorize(Policy = "isAdmin")]
     public async Task<ActionResult> DeleteUserAsync([FromQuery] string? username)
