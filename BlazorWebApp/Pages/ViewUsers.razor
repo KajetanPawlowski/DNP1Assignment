@@ -31,7 +31,7 @@ else
             <tr>
                 <td>@item.UserId</td>
                 <td>@item.Username</td>
-                <td>@NoOfPosts</td>
+                <td>@item.PostCount</td>
                 <td>@item.Role</td>
                 <td><AdminButtons user="@item" OnRoleChanged="@HandleRoleChanged"/></td>
             </tr>
@@ -63,14 +63,6 @@ else
         {
             Console.WriteLine(e);
             msg = "Failed to load users";
-        }
-    }
-
-    private void LoadPostCount()
-    {
-        foreach (var user in users)
-        {
-            
         }
     }
 

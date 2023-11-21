@@ -11,4 +11,5 @@ public class User
     public string Password { get; set; }
     //admin, user, owner
     public string Role { get; set; }
+    public int PostCount { get; set; }
 }

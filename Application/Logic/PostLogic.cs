@@ -38,8 +38,8 @@ public class PostLogic: IPostLogic
             Body = dto.Body
         };
         
-
         Post created = await postDao.CreateAsync(toCreate);
+        await userDao.UpdatePostCounter(toCreate.UserId);
         return created;
     }
 
