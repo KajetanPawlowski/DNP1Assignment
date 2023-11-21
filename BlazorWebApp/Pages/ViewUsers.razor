@@ -29,8 +29,9 @@ else
         @foreach (var item in users)
         {
             <tr>
+                <td>@item.UserId</td>
                 <td>@item.Username</td>
-                <td>@NoOfPosts</td>
+                <td>@item.PostCount</td>
                 <td>@item.Role</td>
                 <td><AdminButtons user="@item" OnRoleChanged="@HandleRoleChanged"/></td>
             </tr>
@@ -44,7 +45,7 @@ else
     private List<User> users;
     private string msg = "";
 
-    private int NoOfPosts = 0;
+    private List<int> NoOfPosts;
     
 
     protected override async Task OnInitializedAsync()

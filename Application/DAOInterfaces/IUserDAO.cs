@@ -8,8 +8,9 @@ public interface IUserDAO
 {
     Task<User> CreateAsync(User user);
     Task DeleteAsync(int userId);
-    Task<User?> AssignRoleAsync(int userId, string newRole);
+    Task<User> AssignRoleAsync(int userId, string newRole);
     Task<User?> GetByUsernameAsync(string username);
     Task<List<User?>> GetAsync();
-    Task<User?> GetByIdAsync(int userId);
+    Task<User> GetByIdAsync(int userId);
+    Task UpdatePostCounter(int userId);
 }
